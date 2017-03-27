@@ -1,13 +1,14 @@
 #include <assert.h>
+#include <stdio.h>
 
-#include "linspace.h"
-#include "numerov.h"
+#include "functions.h"
 
 int main()
 {
     TestLinspace();
-    TestNumerovRight();
-    TestNumerovLeft();
+    TestD3();
+    TestNumerov();
 
+    puts("Everything OK!");
     return 0;
 }

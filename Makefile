@@ -10,18 +10,12 @@ test: test.x
 
 #####
 
-test.x: test.c potential.o linspace.o numerov.o
+test.x: test.c functions.o
 	$(CC) $(CFLAGS) $^ -o $@
 
 ######
 
-potential.o: potential.c potential.h
-	$(CC) $(CFLAGS) -c $< -o $@
-
-linspace.o: linspace.c linspace.h
-	$(CC) $(CFLAGS) -c $< -o $@
-
-numerov.o: numerov.c numerov.h potential.h
+functions.o: functions.c functions.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 #####

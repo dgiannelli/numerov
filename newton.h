@@ -14,3 +14,4 @@ double DLogRight3(double *Y, int N, double h);
 // Computes the 3-points left logarithmic derivative of Y at the Nth point with X-step=h
 double DLogLeft3(double *Y, int N, double h);
 
+void TestD3(void);

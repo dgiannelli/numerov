@@ -1,9 +1,9 @@
+#include <assert.h>
+#include <stdlib.h>
+#include <gsl/gsl_math.h>
+#include <stdio.h>
 
-// Given x1, x2, y1=y(x1), y2=y(x2), proposes the next value x3=x2-y2*(x2-x1)/(y2-y1)
-double NewtonStep(double y1, double y2, double x1, double x2)
-{
-    return x2 - y2*(x2-x1)/(y2-y1);
-}
+#include "linspace.h"
 
 // Computes the 3-points right derivative of Y at the Nth point with X-step=h
 double DRight3(double *Y, int N, double h)
@@ -27,5 +27,18 @@ double DLogRight3(double *Y, int N, double h)
 double DLogLeft3(double *Y, int N, double h)
 {
     return DLeft3(Y,N,h)/Y[N];
+}
+
+void TestD3(void)
+{
+    const int N = 1000;
+    double *X = malloc(N*sizeof(double));
+    double *Y = malloc(N*sizeof(double));
+
+    Linspace(X,0.,M_PI_2,N);
+    for (int i=0; i<N; i++) Y[i]=sin(X[i]);
+
+    assert( fabs(DRight3(Y,N-1,X[N-1]-X[N-2])) < 1.e-6 );
+    assert( gsl_fcmp(DLeft3(Y,0,X[1]-X[0]),1.,1.e-6) == 0 );
 }
 

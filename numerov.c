@@ -52,13 +52,14 @@ void NumerovLeft(double *X, double *Y, double (*W)(double), int N)
     }
 }
 
-void TestNumerovRight(void)
+void TestNumerov(void)
 {
     const int N = 1000;
     double *X = malloc(N*sizeof(double));
+    double *Y = malloc(N*sizeof(double));
     Linspace(X,1.,2.,N);
 
-    double *Y = malloc(N*sizeof(double));
+    //Tests the right step
     Y[0] = sin(X[0]);
     Y[1] = sin(X[1]);
 
@@ -68,17 +69,7 @@ void TestNumerovRight(void)
 
     assert( gsl_fcmp(Y[N-1],sin(X[N-1]),1.e-8) == 0 );
 
-    free(X);
-    free(Y);
-}
-
-void TestNumerovLeft(void)
-{
-    const int N = 1000;
-    double *X = malloc(N*sizeof(double));
-    Linspace(X,1.,2.,N);
-
-    double *Y = malloc(N*sizeof(double));
+    //Tests the left step
     Y[N-1] = exp(X[N-1]);
     Y[N-2] = exp(X[N-2]);
 
