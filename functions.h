@@ -1,6 +1,13 @@
 
-// Given x1, x2, y1=y(x1), y2=y(x2), proposes the next value x3=x2-y2*(x2-x1)/(y2-y1)
-double NewtonStep(double y1, double y2, double x1, double x2);
+extern double R0, V0;
+
+double Zero(double r);
+
+double Well(double r);
+
+double Gauss(double r);
+
+void Linspace(double *X, double from, double to, int N);
 
 // Computes the 3-points right derivative of Y at the Nth point with X-step=h
 double DRight3(double *Y, int N, double h);
@@ -14,4 +21,17 @@ double DLogRight3(double *Y, int N, double h);
 // Computes the 3-points left logarithmic derivative of Y at the Nth point with X-step=h
 double DLogLeft3(double *Y, int N, double h);
 
+// Numerov algorithm: given Z0 and Z1 finds Z2
+void NumerovRight(double *X, double *Y, double (*W)(double), int N);
+
+// Numerov algorithm: given Z2 and Z1 finds Z0
+void NumerovLeft(double *X, double *Y, double (*W)(double), int N);
+
+// ***** Function tests *****
+
+void TestLinspace(void);
+
 void TestD3(void);
+
+void TestNumerov(void);
+
