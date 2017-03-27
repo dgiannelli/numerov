@@ -7,6 +7,7 @@ int main()
 {
     TestLinspace();
     TestNumerovRight();
+    TestNumerovLeft();
 
     return 0;
 }
