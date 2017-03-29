@@ -30,25 +30,25 @@ void Linspace(double *X, double from, double to, int N)
     }
 }
 
-// Computes the 3-points right derivative of Y at the Nth point with X-step=h
+// Computes the 3-points right derivative of Y at the Nth piont (Xstep must be constant)
 double DRight3(double *Y, int N, double h)
 {
     return (1./2.*Y[N-2] - 2.*Y[N-1] + 3./2.*Y[N])/h;
 }
 
-// Computes the 3-points left derivative of Y at the Nth point with X-step=h
+// Computes the 3-points left derivative of Y at the Nth point (Xstep must be constant)
 double DLeft3(double *Y, int N, double h)
 {
     return (-3./2.*Y[N] + 2.*Y[N+1] - 1./2.*Y[N+2])/h;
 }
 
-// Computes the 3-points right logarithmic derivative of Y at the Nth point with X-step=h
+// Computes the 3-points right logarithmic derivative of Y at the Nth point (Xstep must be constant)
 double DLogRight3(double *Y, int N, double h)
 {
     return DRight3(Y,N,h)/Y[N];
 }
 
-// Computes the 3-points left logarithmic derivative of Y at the Nth point with X-step=h
+// Computes the 3-points left logarithmic derivative of Y(X) at the Nth point (Xstep must be constant)
 double DLogLeft3(double *Y, int N, double h)
 {
     return DLeft3(Y,N,h)/Y[N];
