@@ -8,6 +8,8 @@ int main()
     TestLinspace();
     TestD3();
     TestNumerov();
+    TestNewton();
+    assert(newtonIters<100);
 
     puts("Everything OK!");
     return 0;

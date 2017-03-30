@@ -27,6 +27,11 @@ void NumerovRight(double *X, double *Y, double (*W)(double), int N);
 // Numerov algorithm: given Z2 and Z1 finds Z0
 void NumerovLeft(double *X, double *Y, double (*W)(double), int N);
 
+// Root finding of function F: x0 and x1 are the first and second guesses
+double Newton(double (*F)(double), double x1, double x2);
+// Newton iterations counter
+extern int newtonIters;
+
 // ***** Function tests *****
 
 void TestLinspace(void);
@@ -34,4 +39,6 @@ void TestLinspace(void);
 void TestD3(void);
 
 void TestNumerov(void);
+
+void TestNewton(void);
 

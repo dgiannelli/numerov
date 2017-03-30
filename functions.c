@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <gsl/gsl_math.h>
 
+#include <stdio.h>
+
 #include "functions.h"
 
 double R0 = 1.65;
@@ -99,6 +101,25 @@ void NumerovLeft(double *X, double *Y, double (*W)(double), int N)
     }
 }
 
+int newtonIters = 0;
+// Root finding of function F: x0 and x1 are the first and second guesses
+double Newton(double (*F)(double), double x1, double x2)
+{
+    newtonIters = 0;
+    double y1 = F(x1);
+    double y2 = F(x2);
+    while ( fabs(x1-x2) > 1.e-15 )
+    {
+        const double x3 = x2 - y2*(x2-x1)/(y2-y1);
+        x1 = x2;
+        x2 = x3;
+        y1 = y2;
+        y2 = F(x3);
+        newtonIters++;
+    }
+    return x2;
+}
+
 // ***** Function tests *****
 
 void TestLinspace(void)
@@ -155,5 +176,10 @@ void TestNumerov(void)
 
     free(X);
     free(Y);
+}
+
+void TestNewton(void)
+{
+    assert( fabs(Newton(gsl_pow_2,1.,2.)) < 1.e-14);
 }
 

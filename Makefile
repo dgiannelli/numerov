@@ -1,11 +1,14 @@
 CC = gcc
 CFLAGS = -std=c99 -Wall -O3 -lm -lgsl -lgslcblas
 
-.PHONY = bound test clean
+.PHONY = bound zero test clean
 
 #####
 
 bound: bound.x
+	./$<
+
+zero: zero.x
 	./$<
 
 test: test.x
@@ -14,6 +17,9 @@ test: test.x
 #####
 
 bound.x: bound.c functions.o
+	$(CC) $(CFLAGS) $^ -o $@
+
+zero.x: zero.c functions.o
 	$(CC) $(CFLAGS) $^ -o $@
 
 test.x: test.c functions.o

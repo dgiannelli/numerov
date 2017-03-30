@@ -10,8 +10,8 @@
 #define R2 40. //fm -> Tail point 
 #define N1 10000 // Number of points in the left part
 #define N2 10000 // Number of points in the right part
-#define H1 (R1/N1) //fm -> step of the left part
-#define H2 ((R2-R1)/N2) //fm -> step of the right part
+#define H1 (R1/(N1-1)) //fm -> step of the left part
+#define H2 ((R2-R1)/(N2-1)) //fm -> step of the right part
 
 double E;
 
@@ -98,7 +98,7 @@ int main()
     double sumSq = 0.;
     for (int i=0; i<N1+N2; i++)
     {
-        sumSq += gsl_pow_2(Y[i])*(N2+N1-1);
+        sumSq += gsl_pow_2(Y[i])*R2/(N2+N1-1);
     }
     sumSq += gsl_pow_2(Y[N1+N2-1])*sqrt(-0.5*C/E); //Analytic integral of the tail
 
@@ -108,10 +108,10 @@ int main()
         Y[i] /= norm;
     }
 
-    //for (int i=0; i<N1+N2; i++)
-    //{
-    //    printf("%.16f\n", Y[i]);
-    //}
+    for (int i=0; i<N1+N2; i++)
+    {
+        printf("%.16f\n", Y[i]);
+    }
 
     free(X);
     free(Y);
