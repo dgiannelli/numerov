@@ -41,7 +41,11 @@ int main()
     Y[0] = 0.;
     Y[1] = H;
 
-    Newton(F,-37.,-36.);
+    //for (double V=90.; V>-90.; V-=0.2) 
+    //{
+    //    printf("V = %.3f -> a = %.3f\n", V, F(V));
+    //}
+    Newton(F,-37.,-37.1);
 
     puts("*****");
     puts("To obtain a scattering length of -23.74,");
