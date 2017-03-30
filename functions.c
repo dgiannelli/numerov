@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <gsl/gsl_math.h>
 
-#include <stdio.h>
-
 #include "functions.h"
 
 double R0 = 1.65;
@@ -106,9 +104,10 @@ int newtonIters = 0;
 double Newton(double (*F)(double), double x1, double x2)
 {
     newtonIters = 0;
-    double y1 = F(x1);
-    double y2 = F(x2);
-    while ( fabs(x1-x2) > 1.e-15 )
+    double y1, y2;
+    y1 = F(x1);
+    y2 = F(x2);
+    while ( (y2-y1 != 0) && (fabs(x1-x2) > 1.e-10) )
     {
         const double x3 = x2 - y2*(x2-x1)/(y2-y1);
         x1 = x2;
@@ -180,6 +179,7 @@ void TestNumerov(void)
 
 void TestNewton(void)
 {
-    assert( fabs(Newton(gsl_pow_2,1.,2.)) < 1.e-14);
+    double F(double x) {return gsl_pow_2(x) - 2.;}
+    assert( gsl_fcmp(Newton(F,-3.,-2.),-sqrt(2), 1.e-7) == 0 );
 }
 
