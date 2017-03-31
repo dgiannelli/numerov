@@ -20,11 +20,13 @@ double *X2;
 double *Y1;
 double *Y2;
 
+//Function for Numerov algorithm
 double W(double r)
 {
     return (Gauss(r)-E)/C;
 }
 
+// Function whose root need to be found:
 double F(double e)
 {
     E = e;

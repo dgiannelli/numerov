@@ -7,7 +7,7 @@
 #define C 41.47 // hbar^2/m MeV*fm^2
 
 #define R 40. //fm -> Tail point 
-#define N 1000 // Number of points in the left part
+#define N 10000 // Number of points in the left part
 #define H (R/(N-1)) //fm -> step
 
 double *X, *Y;
