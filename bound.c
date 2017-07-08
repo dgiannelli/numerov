@@ -9,7 +9,7 @@
 
 int N1; // Number of intervals in the left part
 int N2; // Number of intervals in the right part
-int H; // Step of the discretization (in fm)
+double H; // Step of the discretization (in fm)
 
 double E; // Energy
 
@@ -46,7 +46,7 @@ double F(double e)
 // N = Number of discretized intervals
 // mode = 0 -> saves the binding energy and the normalyzed wave function
 // mode = 1 -> appends the binding energy vs matching point
-// mode = 3 -> appends the binding energy vs # of intervals
+// mode = 2 -> appends the binding energy vs # of intervals
 int main(int argc, char *argv[])
 {
     assert(argc==5);
@@ -78,11 +78,11 @@ int main(int argc, char *argv[])
     printf("The algorithm converged after %d iterations, with final energy:\nE = %.7f\n", 
             newtonIters, E);
 
-    //Computes and saves the normalized wave function
+    //Compute and save the normalized wave function
     if (mode==0)
     {
         double sumSq = 0.5*gsl_pow_2(Y2[N2]);
-        for (int i=0; i<=N1; i++)
+        for (int i=1; i<=N1; i++)
         {
             sumSq += gsl_pow_2(Y1[i]);
         }
@@ -91,10 +91,10 @@ int main(int argc, char *argv[])
             sumSq += gsl_pow_2(Y2[i]);
         }
         sumSq *= h;
-        sumSq += gsl_pow_2(Y[N2])*0.5*sqrt(-C/E); //Analytic integral of the tail
+        sumSq += gsl_pow_2(Y[N2])*0.5*sqrt(-K/E); //Analytic integral of the tail
         const double norm = sqrt(sumSq);
 
-        FILE *outWave; assert( outWave=fopen("waveFunction.dat", "w") );
+        FILE *outWave; assert( outWave=fopen("boundWave.dat", "w") );
         fprintf(outWave, "Energy %.7f\n", E);
         for (int i=0; i<=N1; i++)
         {
@@ -107,12 +107,20 @@ int main(int argc, char *argv[])
         assert( !fclose(outWave) );
     }
 
-    // Appends matching point and energy
+    // Appends R1 and E
     if (mode==1)
     {
-        FILE *outMatch; assert( outMatch=fopen("matchPoint.dat", "a") );
+        FILE *outMatch; assert( outMatch=fopen("boundMatch.dat", "a") );
         fprintf(outMatch, "%.2f\t%.7e", R1, E);
         assert( !fclose(outMatch) );
+    }
+
+    // Appends N and E
+    if (mode==2)
+    {
+        FILE *outInter; assert( outInter=fopen("boundInter.dat", "a") );
+        fprintf(outInter, "%i\t%.7e", N, E);
+        assert( !fclose(outInter) );
     }
 
     free(X1);

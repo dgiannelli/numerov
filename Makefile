@@ -5,8 +5,8 @@ CFLAGS = -std=c99 -Wall -O3 -lm -lgsl -lgslcblas
 
 #####
 
-bound: bound.x
-	./$<
+bound: bound.x cleanBound
+	./$< 3. 40. 10000 0
 
 zero: zero.x
 	./$<
@@ -38,5 +38,9 @@ functions.o: functions.c functions.h
 
 #####
 
+cleanBound:
+	rm -f bound*.dat
+
 clean:
-	rm -f *.o *.x
+	rm -f *.o *.x *.dat
+
