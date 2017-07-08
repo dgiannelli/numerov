@@ -45,8 +45,9 @@ double F(double e)
 // R2 = Tail point (in fm)
 // N = Number of discretized intervals
 // mode = 0 -> saves the binding energy and the normalyzed wave function
-// mode = 1 -> appends the binding energy vs matching point
-// mode = 2 -> appends the binding energy vs # of intervals
+// mode = 1 -> appends the binding energy vs # of intervals
+// mode = 2 -> appends the binding energy vs tail point
+// mode = 3 -> appends the binding energy vs matching point
 int main(int argc, char *argv[])
 {
     assert(argc==5);
@@ -75,12 +76,17 @@ int main(int argc, char *argv[])
 
     Newton(F,-2.,-2.1); // Finds the root of F(e) with Newton tangent method
 
-    printf("The algorithm converged after %d iterations, with final energy:\nE = %.7f\n", 
+    printf("The algorithm converged after %d iterations, with final energy: E = %.9f\n", 
             newtonIters, E);
 
-    //Compute and save the normalized wave function
+    // Compute and save the normalized wave function
     if (mode==0)
     {
+        // Set the same overall constant
+        const double A = Y2[0]/Y1[N1];
+        for (int i=0; i<=N1; i++) Y1[i] *= A;
+
+        // Compute the square integral
         double sumSq = 0.5*gsl_pow_2(Y2[N2]);
         for (int i=1; i<=N1; i++)
         {
@@ -90,12 +96,11 @@ int main(int argc, char *argv[])
         {
             sumSq += gsl_pow_2(Y2[i]);
         }
-        sumSq *= h;
-        sumSq += gsl_pow_2(Y[N2])*0.5*sqrt(-K/E); //Analytic integral of the tail
+        sumSq *= H;
+        sumSq += gsl_pow_2(Y2[N2])*0.5*sqrt(-K/E); //Analytic integral of the tail
         const double norm = sqrt(sumSq);
 
         FILE *outWave; assert( outWave=fopen("boundWave.dat", "w") );
-        fprintf(outWave, "Energy %.7f\n", E);
         for (int i=0; i<=N1; i++)
         {
             fprintf(outWave, "%.5e\n", Y1[i]/norm);
@@ -107,26 +112,34 @@ int main(int argc, char *argv[])
         assert( !fclose(outWave) );
     }
 
-    // Appends R1 and E
-    if (mode==1)
-    {
-        FILE *outMatch; assert( outMatch=fopen("boundMatch.dat", "a") );
-        fprintf(outMatch, "%.2f\t%.7e", R1, E);
-        assert( !fclose(outMatch) );
-    }
-
-    // Appends N and E
-    if (mode==2)
-    {
-        FILE *outInter; assert( outInter=fopen("boundInter.dat", "a") );
-        fprintf(outInter, "%i\t%.7e", N, E);
-        assert( !fclose(outInter) );
-    }
-
     free(X1);
     free(X2);
     free(Y1);
     free(Y2);
+
+    // Appends # of intervals and binding energy
+    if (mode==1)
+    {
+        FILE *outInter; assert( outInter=fopen("boundInter.dat", "a") );
+        fprintf(outInter, "%i\t%.9e\n", N, -E);
+        assert( !fclose(outInter) );
+    }
+
+    // Appends tail point and binding energy
+    if (mode==2)
+    {
+        FILE *outTail; assert( outTail=fopen("boundTail.dat", "a") );
+        fprintf(outTail, "%.2f\t%.9e\n", R2, -E);
+        assert( !fclose(outTail) );
+    }
+
+    // Appends matching point and binding energy
+    if (mode==3)
+    {
+        FILE *outMatch; assert( outMatch=fopen("boundMatch.dat", "a") );
+        fprintf(outMatch, "%.2f\t%.9e\n", R1, -E);
+        assert( !fclose(outMatch) );
+    }
 
     return 0;
 }
