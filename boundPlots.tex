@@ -11,15 +11,17 @@
 \pgfplotstableset
 {
     every head row/.style={before row=\toprule,after row=\midrule},
-    every last row/.style={after row=\bottomrule}
+    every last row/.style={after row=\bottomrule},
 }
 
 \begin{document}
 
-%Potenziale usato:
-%$$V(r) = V_0\,e^{\left(\frac{r}{R_0}\right)^2}$$
+Potenziale usato:
+\begin{align*}
+    V(r) &= V_0\,e^{-\left(r/R_0\right)^2} & V_0 &=-60.575\ \mathrm{MeV},\ R_0 = 1.65\ \mathrm{fm}
+\end{align*}
 
-\begin{figure}
+\begin{figure}[!h]
     \centering
     \begin{subfigure}{0.6\textwidth}
         \centering
@@ -45,17 +47,17 @@
                     x index = 0,
                     y expr = \thisrowno{1}-2.2255058,
                     header = false,
-                ] {boundInter.dat}
+                ] {boundInter.dat};
             \end{semilogxaxis}
         \end{tikzpicture}
     \end{subfigure}%
     \begin{subfigure}{0.4\textwidth}
         \centering
-        %\begin{align*}
-        %    E_b &=2.2255058\ \mathrm{MeV}\\
-        %    R_1 &=5\ \mathrm{fm}\\
-        %    R_2 &=40\ \mathrm{fm}
-        %\end{align*}
+        \begin{align*}
+            E_b &=2.2255058\ \mathrm{MeV}\\
+            R_1 &=5\ \mathrm{fm}\\
+            R_2 &=40\ \mathrm{fm}
+        \end{align*}
 
         \pgfplotstabletypeset
         [
@@ -63,114 +65,121 @@
             columns/0/.style={column name=$N$},
             columns/1/.style=
             {
-                column name = $E-E_b$,
+                column name = $E-E_b\ [\mathrm{MeV}]$,
                 preproc/expr={##1-2.2255058},
+                precision = 1, sci zerofill = true,
             }
         ] {boundInter.dat}
     \end{subfigure}
     \caption{Sono troncate le cifre successive all'ottava significativa}
 \end{figure}
 
-%\begin{figure}
-%    \centering
-%    \begin{subfigure}{0.6\textwidth}
-%        \centering
-%        \begin{tikzpicture}
-%            \begin{axis}
-%                [
-%                    %xmin = , xmax = ,
-%                    %ymin =, ymax=,
-%                    title = Variazione dell'energia vs Punto finale,
-%                    title style={xshift=1.5em, yshift=.5em},
-%                    xlabel = {$R_2\ [\mathrm{fm}]$},
-%                    ylabel = {$E - E_b\ [\mathrm{MeV}]$},
-%                    height = .9\textwidth,
-%                    width = .9\textwidth,
-%                ]
-%                \addplot+
-%                [
-%                    only marks,
-%                    %mark = square,
-%                    color = blue,
-%                ] table
-%                [
-%                    x index = 0,
-%                    y expr = \thisrowno{1}-2.2255058,
-%                    header = false,
-%                ] {boundTail.dat};
-%            \end{axis}
-%        \end{tikzpicture}
-%    \end{subfigure}%
-%    \begin{subfigure}{0.4\textwidth}
-%        \centering
-%        \begin{align*}
-%            E_b &=2.2255058\ \mathrm{MeV}\\
-%            R_1 &=5\ \mathrm{fm}\\
-%            N &=4000
-%        \end{align*}
-%
-%        \pgfplotstabletypeset
-%        [
-%            header = false,
-%            columns/0/.style={column name=$R_2$},
-%            columns/1/.style=
-%            {
-%                column name = $E-E_b$,
-%                preproc/expr={##1-2.2255058},
-%            }
-%        ] {boundTail.dat}
-%    \end{subfigure}
-%\end{figure}
-%
-%\begin{figure}
-%    \centering
-%    \begin{subfigure}{0.6\textwidth}
-%        \centering
-%        \begin{tikzpicture}
-%            \begin{axis}
-%                [
-%                    %xmin = , xmax = ,
-%                    %ymin =, ymax=,
-%                    title = Variazione dell'energia vs Punto di matching,
-%                    title style={xshift=1.5em, yshift=.5em},
-%                    xlabel = {$R_1\ [\mathrm{fm}]$},
-%                    ylabel = {$E - E_b\ [\mathrm{MeV}]$},
-%                    height = .9\textwidth,
-%                    width = .9\textwidth,
-%                ]
-%                \addplot+
-%                [
-%                    only marks,
-%                    %mark = square,
-%                    color = blue,
-%                ] table
-%                [
-%                    x index = 0,
-%                    y expr = \thisrowno{1}-2.2255058,
-%                    header = false,
-%                ] {boundMatch.dat};
-%            \end{axis}
-%        \end{tikzpicture}
-%    \end{subfigure}%
-%    \begin{subfigure}{0.4\textwidth}
-%        \centering
-%        \begin{align*}
-%            E_b &=2.2255058\ \mathrm{MeV}\\
-%            R_2 &=50\ \mathrm{fm}\\
-%            N &=4000
-%        \end{align*}
-%
-%        \pgfplotstabletypeset
-%        [
-%            header = false,
-%            columns/0/.style={column name=$R_1$},
-%            columns/1/.style=
-%            {
-%                column name = $E-E_b$,
-%                preproc/expr={##1-2.2255058},
-%            }
-%        ] {boundMatch.dat}
-%    \end{subfigure}
-%\end{figure}
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.6\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}
+                [
+                    %xmin = , xmax = ,
+                    %ymin =, ymax=,
+                    title = Variazione dell'energia vs Punto finale,
+                    title style={xshift=1.5em, yshift=.5em},
+                    xlabel = {$R_2\ [\mathrm{fm}]$},
+                    ylabel = {$E - E_b\ [\mathrm{MeV}]$},
+                    height = .9\textwidth,
+                    width = .9\textwidth,
+                ]
+                \addplot+
+                [
+                    only marks,
+                    %mark = square,
+                    color = blue,
+                ] table
+                [
+                    x index = 0,
+                    y expr = \thisrowno{1}-2.2255058,
+                    header = false,
+                ] {boundTail.dat};
+            \end{axis}
+        \end{tikzpicture}
+    \end{subfigure}%
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \begin{align*}
+            E_b &=2.2255058\ \mathrm{MeV}\\
+            R_1 &=5\ \mathrm{fm}\\
+            N &=4000
+        \end{align*}
+
+        \pgfplotstabletypeset
+        [
+            header = false,
+            columns/0/.style={column name=$R_2\ [\mathrm{fm}]$},
+            columns/1/.style=
+            {
+                column name = $E-E_b\ [\mathrm{MeV}]$,
+                preproc/expr={##1-2.2255058},
+                precision = 1, sci zerofill = true,
+            }
+        ] {boundTail.dat}
+    \end{subfigure}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.6\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}
+                [
+                    %xmin = , xmax = ,
+                    %ymin =, ymax=,
+                    title = Variazione dell'energia vs Punto di matching,
+                    title style={xshift=1.5em, yshift=.5em},
+                    xlabel = {$R_1\ [\mathrm{fm}]$},
+                    ylabel = {$E - E_b\ [\mathrm{MeV}]$},
+                    height = .9\textwidth,
+                    width = .9\textwidth,
+                ]
+                \addplot+
+                [
+                    only marks,
+                    %mark = square,
+                    color = blue,
+                ] table
+                [
+                    x index = 0,
+                    y expr = \thisrowno{1}-2.2255058,
+                    header = false,
+                ] {boundMatch.dat};
+            \end{axis}
+        \end{tikzpicture}
+    \end{subfigure}%
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \begin{align*}
+            E_b &=2.2255058\ \mathrm{MeV}\\
+            R_2 &=50\ \mathrm{fm}\\
+            N &=4000
+        \end{align*}
+
+        \pgfplotstabletypeset
+        [
+            header = false,
+            columns/0/.style=
+            {
+                column name = {$R_1\ [\mathrm{fm}]$},
+                precision = 1, zerofill = true,
+            },
+            columns/1/.style=
+            {
+                column name = $E-E_b\ [\mathrm{MeV}]$,
+                preproc/expr={##1-2.2255058},
+                precision = 1, sci zerofill = true,
+            },
+        ] {boundMatch.dat}
+    \end{subfigure}
+\end{figure}
 
 \end{document}
