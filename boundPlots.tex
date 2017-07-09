@@ -6,6 +6,7 @@
 \usepackage{pgfplots,pgfplotstable}
 \usepackage{booktabs}
 \usepackage{amsmath}
+\usepackage{hyperref}
 
 \pagenumbering{gobble}
 \pgfplotstableset
@@ -16,12 +17,12 @@
 
 \begin{document}
 
-Potenziale usato:
+Potenziale usato\footnote{Codice sorgente: \url{http://github.com/dgiannelli/numerov}}:
 \begin{align*}
     V(r) &= V_0\,e^{-\left(r/R_0\right)^2} & V_0 &=-60.575\ \mathrm{MeV},\ R_0 = 1.65\ \mathrm{fm}
 \end{align*}
 
-Nei risultati riportati, i valori sono troncati dopo le prime 8 cifre significative
+Nei risultati riportati, i valori sono troncati dopo le prime 8 cifre significative.\\
 
 \vspace{2em}
 

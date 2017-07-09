@@ -44,8 +44,9 @@ bound: bound.x cleanBound
 zero: zero.x
 	./$<
 
-scattering: scattering.x
+scattering: scattering.x fit.py
 	./$<
+	./fit.py
 
 test: test.x
 	./$<
