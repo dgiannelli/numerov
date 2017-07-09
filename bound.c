@@ -103,11 +103,11 @@ int main(int argc, char *argv[])
         FILE *outWave; assert( outWave=fopen("boundWave.dat", "w") );
         for (int i=0; i<=N1; i++)
         {
-            fprintf(outWave, "%.5e\n", Y1[i]/norm);
+            fprintf(outWave, "%.3e\t%.5e\n", X1[i], Y1[i]/norm);
         }
         for (int i=1; i<=N2; i++)
         {
-            fprintf(outWave, "%.5e\n", Y2[i]/norm);
+            fprintf(outWave, "%.3e\t%.5e\n", X2[i], Y2[i]/norm);
         }
         assert( !fclose(outWave) );
     }

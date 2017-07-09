@@ -1,6 +1,6 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage[italian]{babel}
-\usepackage[left=2.5cm,top=3cm,right=2.5cm,bottom=3cm]{geometry}
+\usepackage[left=3cm,top=3cm,right=3cm,bottom=3cm]{geometry}
 \usepackage{subcaption}
 \usepackage{tikz}
 \usepackage{pgfplots,pgfplotstable}
@@ -21,7 +21,46 @@ Potenziale usato:
     V(r) &= V_0\,e^{-\left(r/R_0\right)^2} & V_0 &=-60.575\ \mathrm{MeV},\ R_0 = 1.65\ \mathrm{fm}
 \end{align*}
 
-\begin{figure}[!h]
+Nei risultati riportati, i valori sono troncati dopo le prime 8 cifre significative
+
+\vspace{2em}
+
+\begin{figure}[htb]
+    \centering
+    \begin{subfigure}{.65\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \begin{axis}
+                [
+                    title = Funzione d'onda dello stato legato,
+                    xlabel = {$r\ [\mathrm{fm}]$},
+                    ylabel = $u(r)$,
+                    height = .6\textwidth,
+                    width = .9\textwidth,
+                ]
+                \addplot+[no marks] table
+                [
+                    x index = 0,
+                    y index = 1,
+                    header = false,
+                ] {boundWave.dat};
+            \end{axis}
+        \end{tikzpicture}
+    \end{subfigure}%
+    \begin{subfigure}{.35\textwidth}
+        \centering
+        \begin{align*}
+            E_b &=2.2255058\ \mathrm{MeV}\\
+            R_1 &=5\ \mathrm{fm}\\
+            R_2 &=50\ \mathrm{fm}\\
+            N &=4000
+        \end{align*}
+    \end{subfigure}
+\end{figure}
+
+\vspace{2em}
+
+\begin{figure}[htb]
     \centering
     \begin{subfigure}{0.6\textwidth}
         \centering
@@ -71,10 +110,9 @@ Potenziale usato:
             }
         ] {boundInter.dat}
     \end{subfigure}
-    \caption{Sono troncate le cifre successive all'ottava significativa}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htb]
     \centering
     \begin{subfigure}{0.6\textwidth}
         \centering
@@ -126,7 +164,7 @@ Potenziale usato:
     \end{subfigure}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htb]
     \centering
     \begin{subfigure}{0.6\textwidth}
         \centering
