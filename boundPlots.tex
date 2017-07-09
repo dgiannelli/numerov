@@ -1,0 +1,176 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[italian]{babel}
+\usepackage[left=2.5cm,top=3cm,right=2.5cm,bottom=3cm]{geometry}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usepackage{pgfplots,pgfplotstable}
+\usepackage{booktabs}
+\usepackage{amsmath}
+
+\pagenumbering{gobble}
+\pgfplotstableset
+{
+    every head row/.style={before row=\toprule,after row=\midrule},
+    every last row/.style={after row=\bottomrule}
+}
+
+\begin{document}
+
+%Potenziale usato:
+%$$V(r) = V_0\,e^{\left(\frac{r}{R_0}\right)^2}$$
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.6\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \begin{semilogxaxis}
+                [
+                    xmin = 50, xmax = 5000,
+                    %ymin =, ymax=,
+                    title = Variazione dell'energia vs Numero di intervalli,
+                    title style={xshift=1.5em, yshift=.5em},
+                    xlabel = N,
+                    ylabel = {$E - E_b\ [\mathrm{MeV}]$},
+                    height = .9\textwidth,
+                    width = .9\textwidth,
+                ]
+                \addplot+
+                [
+                    only marks,
+                    %mark = square,
+                    color = blue,
+                ] table
+                [
+                    x index = 0,
+                    y expr = \thisrowno{1}-2.2255058,
+                    header = false,
+                ] {boundInter.dat}
+            \end{semilogxaxis}
+        \end{tikzpicture}
+    \end{subfigure}%
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        %\begin{align*}
+        %    E_b &=2.2255058\ \mathrm{MeV}\\
+        %    R_1 &=5\ \mathrm{fm}\\
+        %    R_2 &=40\ \mathrm{fm}
+        %\end{align*}
+
+        \pgfplotstabletypeset
+        [
+            header = false,
+            columns/0/.style={column name=$N$},
+            columns/1/.style=
+            {
+                column name = $E-E_b$,
+                preproc/expr={##1-2.2255058},
+            }
+        ] {boundInter.dat}
+    \end{subfigure}
+    \caption{Sono troncate le cifre successive all'ottava significativa}
+\end{figure}
+
+%\begin{figure}
+%    \centering
+%    \begin{subfigure}{0.6\textwidth}
+%        \centering
+%        \begin{tikzpicture}
+%            \begin{axis}
+%                [
+%                    %xmin = , xmax = ,
+%                    %ymin =, ymax=,
+%                    title = Variazione dell'energia vs Punto finale,
+%                    title style={xshift=1.5em, yshift=.5em},
+%                    xlabel = {$R_2\ [\mathrm{fm}]$},
+%                    ylabel = {$E - E_b\ [\mathrm{MeV}]$},
+%                    height = .9\textwidth,
+%                    width = .9\textwidth,
+%                ]
+%                \addplot+
+%                [
+%                    only marks,
+%                    %mark = square,
+%                    color = blue,
+%                ] table
+%                [
+%                    x index = 0,
+%                    y expr = \thisrowno{1}-2.2255058,
+%                    header = false,
+%                ] {boundTail.dat};
+%            \end{axis}
+%        \end{tikzpicture}
+%    \end{subfigure}%
+%    \begin{subfigure}{0.4\textwidth}
+%        \centering
+%        \begin{align*}
+%            E_b &=2.2255058\ \mathrm{MeV}\\
+%            R_1 &=5\ \mathrm{fm}\\
+%            N &=4000
+%        \end{align*}
+%
+%        \pgfplotstabletypeset
+%        [
+%            header = false,
+%            columns/0/.style={column name=$R_2$},
+%            columns/1/.style=
+%            {
+%                column name = $E-E_b$,
+%                preproc/expr={##1-2.2255058},
+%            }
+%        ] {boundTail.dat}
+%    \end{subfigure}
+%\end{figure}
+%
+%\begin{figure}
+%    \centering
+%    \begin{subfigure}{0.6\textwidth}
+%        \centering
+%        \begin{tikzpicture}
+%            \begin{axis}
+%                [
+%                    %xmin = , xmax = ,
+%                    %ymin =, ymax=,
+%                    title = Variazione dell'energia vs Punto di matching,
+%                    title style={xshift=1.5em, yshift=.5em},
+%                    xlabel = {$R_1\ [\mathrm{fm}]$},
+%                    ylabel = {$E - E_b\ [\mathrm{MeV}]$},
+%                    height = .9\textwidth,
+%                    width = .9\textwidth,
+%                ]
+%                \addplot+
+%                [
+%                    only marks,
+%                    %mark = square,
+%                    color = blue,
+%                ] table
+%                [
+%                    x index = 0,
+%                    y expr = \thisrowno{1}-2.2255058,
+%                    header = false,
+%                ] {boundMatch.dat};
+%            \end{axis}
+%        \end{tikzpicture}
+%    \end{subfigure}%
+%    \begin{subfigure}{0.4\textwidth}
+%        \centering
+%        \begin{align*}
+%            E_b &=2.2255058\ \mathrm{MeV}\\
+%            R_2 &=50\ \mathrm{fm}\\
+%            N &=4000
+%        \end{align*}
+%
+%        \pgfplotstabletypeset
+%        [
+%            header = false,
+%            columns/0/.style={column name=$R_1$},
+%            columns/1/.style=
+%            {
+%                column name = $E-E_b$,
+%                preproc/expr={##1-2.2255058},
+%            }
+%        ] {boundMatch.dat}
+%    \end{subfigure}
+%\end{figure}
+
+\end{document}

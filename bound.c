@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
     if (mode==1)
     {
         FILE *outInter; assert( outInter=fopen("boundInter.dat", "a") );
-        fprintf(outInter, "%i\t%.9e\n", N, -E);
+        fprintf(outInter, "%05d\t%.10e\n", N, -E);
         assert( !fclose(outInter) );
     }
 
@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
     if (mode==2)
     {
         FILE *outTail; assert( outTail=fopen("boundTail.dat", "a") );
-        fprintf(outTail, "%.2f\t%.9e\n", R2, -E);
+        fprintf(outTail, "%.2f\t%.10e\n", R2, -E);
         assert( !fclose(outTail) );
     }
 
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
     if (mode==3)
     {
         FILE *outMatch; assert( outMatch=fopen("boundMatch.dat", "a") );
-        fprintf(outMatch, "%.2f\t%.9e\n", R1, -E);
+        fprintf(outMatch, "%.2f\t%.10e\n", R1, -E);
         assert( !fclose(outMatch) );
     }
 
