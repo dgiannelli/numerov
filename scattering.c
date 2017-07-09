@@ -7,8 +7,8 @@
 
 #define K 41.47 // hbar^2/m MeV*fm^2
 
-#define R 40. // Tail point (in fm)
-#define N 40000 // Number intervals
+#define R 50. // Tail point (in fm)
+#define N 4000 // Number intervals
 #define H (R/N) // Step of the discretization (in fm)
 
 double E;
@@ -48,7 +48,7 @@ int main()
     Y[1] = H;
     
     FILE *outScat; assert(outScat=fopen("scattering.dat","w"));
-    for (double kSq = 0.01; kSq<=1.; kSq += 0.01) 
+    for (double kSq = 0.05; kSq<=0.5; kSq += 0.05) 
     {
         E = kSq*K;
         NumerovRight(X,Y,W,N+1);
